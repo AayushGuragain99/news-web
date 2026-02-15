@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    .login-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        margin: 2rem 0 4rem 0;
+    }
+    
+    .card {
+        border: 1px solid #dee2e6;
+        border-radius: 0;
+        background: white;
+    }
+    
+    .card-header {
+        background: #343a40;
+        color: white;
+        text-align: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid #dee2e6;
+        border-radius: 0;
+    }
+    
+    .card-header h3 {
+        margin: 0;
+        font-weight: 500;
+        font-size: 1.8rem;
+    }
+    
+    .card-header p {
+        margin: 0.5rem 0 0 0;
+        color: #adb5bd;
+    }
+    
+    .card-body {
+        padding: 2rem;
+        background: white;
+    }
+    
+    .form-label {
+        font-weight: 500;
+        color: #212529;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 0;
+        padding: 0.75rem 1rem;
+        background: white;
+        color: #212529;
+    }
+    
+    .form-control:focus {
+        border-color: #343a40;
+        outline: 0;
+        box-shadow: none;
+    }
+    
+    .form-check-input {
+        border-radius: 0;
+        border: 1px solid #ced4da;
+    }
+    
+    .form-check-input:checked {
+        background-color: #343a40;
+        border-color: #343a40;
+    }
+    
+    .btn-dark {
+        background: #343a40;
+        border: 1px solid #343a40;
+        border-radius: 0;
+        padding: 0.75rem;
+        font-weight: 500;
+        color: white;
+    }
+    
+    .btn-dark:hover {
+        background: #23272b;
+        border-color: #1d2124;
+    }
+    
+    .text-primary {
+        color: #343a40 !important;
+        text-decoration: none;
+    }
+    
+    .text-primary:hover {
+        text-decoration: underline;
+    }
+    
+    .text-muted {
+        color: #6c757d !important;
+    }
+    
+    footer {
+        background: #343a40;
+        color: white;
+        padding: 1rem 0;
+        width: 100%;
+        margin-top: auto;
+    }
+</style>
+
+<div class="container">
+    <div class="login-container">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Welcome Back!</h3>
+                    <p>Please login to your account</p>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ form.email.label(class="form-label") }}
+                            {{ form.email(class="form-control", placeholder="Enter your email") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.password.label(class="form-label") }}
+                            {{ form.password(class="form-control", placeholder="Enter your password") }}
+                        </div>
+                        <div class="mb-3 form-check">
+                            {{ form.remember(class="form-check-input") }}
+                            {{ form.remember.label(class="form-check-label") }}
+                        </div>
+                        <div class="d-grid">
+                            {{ form.submit(class="btn btn-dark") }}
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <small class="text-muted">
+                            Don't have an account? <a href="{{ url_for('main.register') }}" class="text-primary">Register here</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

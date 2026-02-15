@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-header bg-primary text-white text-center py-4">
+                <h3>User Profile</h3>
+            </div>
+            <div class="card-body text-center p-5">
+                <div class="bg-light rounded-circle d-inline-block p-4 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-person-fill text-secondary" viewBox="0 0 16 16">
+                      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                    </svg>
+                </div>
+                <h2 class="fw-bold">{{ current_user.username }}</h2>
+                <p class="text-muted">{{ current_user.email }}</p>
+                <hr>
+                <div class="text-start">
+                    <p><strong>Account Status:</strong> 
+                        {% if current_user.is_admin %}
+                            <span class="badge bg-danger">Administrator</span>
+                        {% else %}
+                            <span class="badge bg-success">Standard User</span>
+                        {% endif %}
+                    </p>
+                    <p><strong>Total News Posts:</strong> {{ current_user.posts|length }}</p>
+                </div>
+                <div class="d-grid mt-4">
+                    <a href="/" class="btn btn-outline-primary">Back to Newsfeed</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>NewsFlash </title>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .navbar-brand { font-family: 'Playfair Display', serif; font-weight: bold; font-size: 1.5rem; }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">NewsFlash</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav me-auto">
+                    <a class="nav-link" href="/">All News</a>
+                    <a class="nav-link" href="#">Business</a>
+                    <a class="nav-link" href="#">Politics</a>
+                    <a class="nav-link" href="#">Sports</a>
+                    <a class="nav-link" href="#">Agriculture</a>
+                </div>
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
+                    
+                    {% if current_user.is_authenticated %}
+                        <a class="nav-link text-info" href="{{ url_for('main.new_post') }}">+ New Post</a>
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                {{ current_user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ url_for('main.profile') }}">Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="{{ url_for('main.logout') }}">Logout</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <a class="nav-link" href="{{ url_for('main.login') }}">Login</a>
+                        <a class="nav-link btn btn-primary text-white ms-lg-2 px-3" href="{{ url_for('main.register') }}">Join Us</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <footer class="footer mt-auto py-4 bg-dark text-white">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-4"><h5>NewsFlash</h5><p>Latest updates 24/7</p></div>
+            <div class="col-md-4"><h5>Links</h5><a href="/" class="text-white">Home</a></div>
+            <div class="col-md-4"><h5>Contact</h5><p>info@newsflash.com</p></div>
+        </div>
+        <hr class="bg-light">
+        <span>© 2026 NewsFlash Project</span>
+    </div>
+</footer>
+</body>
+</html>

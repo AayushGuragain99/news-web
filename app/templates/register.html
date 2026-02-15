@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    .register-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        margin: 2rem 0 4rem 0;
+    }
+    
+    .card {
+        border: 1px solid #dee2e6;
+        border-radius: 0;
+        background: white;
+    }
+    
+    .card-header {
+        background: #343a40;
+        color: white;
+        text-align: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid #dee2e6;
+        border-radius: 0;
+    }
+    
+    .card-header h3 {
+        margin: 0;
+        font-weight: 500;
+        font-size: 1.8rem;
+    }
+    
+    .card-body {
+        padding: 2rem;
+        background: white;
+    }
+    
+    .form-label {
+        font-weight: 500;
+        color: #212529;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 0;
+        padding: 0.75rem 1rem;
+        background: white;
+        color: #212529;
+    }
+    
+    .form-control:focus {
+        border-color: #343a40;
+        outline: 0;
+        box-shadow: none;
+    }
+    
+    .form-control.is-invalid {
+        border-color: #dc3545;
+        border-radius: 0;
+    }
+    
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+    
+    .btn-dark {
+        background: #343a40;
+        border: 1px solid #343a40;
+        border-radius: 0;
+        padding: 0.75rem;
+        font-weight: 500;
+        color: white;
+        width: 100%;
+    }
+    
+    .btn-dark:hover {
+        background: #23272b;
+        border-color: #1d2124;
+    }
+    
+    .text-center {
+        text-align: center;
+    }
+    
+    .mt-3 {
+        margin-top: 1rem;
+    }
+    
+    .text-muted {
+        color: #6c757d !important;
+    }
+    
+    .text-primary {
+        color: #343a40 !important;
+        text-decoration: none;
+    }
+    
+    .text-primary:hover {
+        text-decoration: underline;
+    }
+    
+    footer {
+        background: #343a40;
+        color: white;
+        padding: 1rem 0;
+        width: 100%;
+        margin-top: auto;
+    }
+</style>
+
+<div class="container">
+    <div class="register-container">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Create Account</h3>
+                    <p class="mb-0 text-white-50">Join our community today</p>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ form.username.label(class="form-label") }}
+                            {% if form.username.errors %}
+                                {{ form.username(class="form-control is-invalid", placeholder="Choose a username") }}
+                                {% for error in form.username.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.username(class="form-control", placeholder="Choose a username") }}
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.email.label(class="form-label") }}
+                            {% if form.email.errors %}
+                                {{ form.email(class="form-control is-invalid", placeholder="Enter your email") }}
+                                {% for error in form.email.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            {% else %}
+                                {{ form.email(class="form-control", placeholder="Enter your email") }}
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.password.label(class="form-label") }}
+                            {{ form.password(class="form-control", placeholder="Create a password") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.confirm_password.label(class="form-label") }}
+                            {{ form.confirm_password(class="form-control", placeholder="Confirm your password") }}
+                        </div>
+                        <div class="d-grid">
+                            {{ form.submit(class="btn btn-dark") }}
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <small class="text-muted">
+                            Already have an account? <a href="{{ url_for('main.login') }}" class="text-primary">Login here</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
