@@ -7,7 +7,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)  # Added is_admin field
+    is_admin = db.Column(db.Boolean, default=False)
     posts = db.relationship('Post', backref='author', lazy=True)
     
     def __repr__(self):
@@ -28,6 +28,7 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
+    is_trending = db.Column(db.Boolean, default=False)
     
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"

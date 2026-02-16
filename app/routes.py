@@ -9,8 +9,22 @@ main_bp = Blueprint('main', __name__)
 # --- HOME PAGE ---
 @main_bp.route("/")
 def index():
-    posts = Post.query.order_by(Post.date_posted.desc()).all()
+    # Sorts by Trending (True first), then by Date (Newest first)
+    posts = Post.query.order_by(Post.is_trending.desc(), Post.date_posted.desc()).all()
     return render_template('index.html', posts=posts)
+
+# --- CATEGORY PAGE ---
+@main_bp.route("/category/<string:category_name>")
+def category_posts(category_name):
+    # Find the category in the DB (case-insensitive search)
+    category = Category.query.filter(Category.name.ilike(category_name)).first_or_404()
+    
+    # Get all posts belonging to this specific category
+    # Apply the same sorting logic to category pages
+    posts = Post.query.filter_by(category_id=category.id)\
+               .order_by(Post.is_trending.desc(), Post.date_posted.desc()).all()
+    
+    return render_template('index.html', posts=posts, title=category.name)
 
 # --- ADMIN DASHBOARD ---
 @main_bp.route("/admin/dashboard")
@@ -75,7 +89,8 @@ def new_post():
             title=form.title.data, 
             content=form.content.data, 
             author=current_user, 
-            category_id=form.category.data # Uses the ID from the dropdown
+            category_id=form.category.data, # Uses the ID from the dropdown
+            is_trending=form.is_trending.data
         )
         db.session.add(post)
         db.session.commit()
@@ -101,6 +116,7 @@ def update_post(post_id):
         post.title = form.title.data
         post.content = form.content.data
         post.category_id = form.category.data
+        post.is_trending = form.is_trending.data
         db.session.commit()
         flash('Your post has been updated!', 'success')
         return redirect(url_for('main.post', post_id=post.id))
@@ -108,6 +124,7 @@ def update_post(post_id):
         form.title.data = post.title
         form.content.data = post.content
         form.category.data = post.category_id
+        form.is_trending.data = post.is_trending
     return render_template('create_post.html', title='Update Post', form=form)
 
 @main_bp.route("/post/<int:post_id>/delete", methods=['POST'])

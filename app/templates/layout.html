@@ -21,11 +21,11 @@
             
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link" href="/">All News</a>
-                    <a class="nav-link" href="#">Business</a>
-                    <a class="nav-link" href="#">Politics</a>
-                    <a class="nav-link" href="#">Sports</a>
-                    <a class="nav-link" href="#">Agriculture</a>
+                    <a class="nav-link" href="{{ url_for('main.index') }}">All News</a>
+                    <a class="nav-link" href="{{ url_for('main.category_posts', category_name='Business') }}">Business</a>
+                    <a class="nav-link" href="{{ url_for('main.category_posts', category_name='Politics') }}">Politics</a>
+                    <a class="nav-link" href="{{ url_for('main.category_posts', category_name='Sports') }}">Sports</a>
+                    <a class="nav-link" href="{{ url_for('main.category_posts', category_name='Agriculture') }}">Agriculture</a>
                 </div>
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>

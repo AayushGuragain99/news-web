@@ -21,4 +21,5 @@ class PostForm(FlaskForm):
     content = TextAreaField('Content', validators=[DataRequired()])
     # This will hold our list of categories
     category = SelectField('Category', coerce=int, validators=[DataRequired()])
+    is_trending = BooleanField('Mark as Trending')
     submit = SubmitField('Post News')
